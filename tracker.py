@@ -1,90 +1,77 @@
-# Project: Expense Tracker - Installment 4
+# Project: Expense Tracker - Installment 5
 # Author: Vearne Earluoze R. Rodriguez
-# Description: Categorizes expense sizes and determines budget verdicts with conditionals.
+# Description: Implements an interactive loop menu to log expenses, view totals, and exit cleanly.
 
+# Banner (prints once at startup)
 print("-" * 40)
 print("\tEXPENSE TRACKER")
 print("\tKnow where your money goes.")
 print("=" * 40)
 
-print("MAIN MENU")
-print("[1] Add an expense\t\t(coming soon)")
-print("[2] View all expenses\t\t(coming soon)")
-print("[3] Show total spent\t\t(coming soon)")
-print("[4] Exit\t\t\t(coming soon)")
-print("=" * 40)
-
-# Input: Name greeting
+# Setup questions (asked once per run)
 name = input("What's your name? ")
-print(f"Welcome, {name}! Let's log two expenses.")
-
-# Subtotal initialization and incremental accumulation
-subtotal = 0.0
-
-# First Expense
-item1 = input("First expense? ")
-amount1 = float(input("Amount? "))
-subtotal += amount1
-
-if amount1 > 200:
-    print("  Huge expense — are you sure?")
-elif amount1 > 100:
-    print("  Big expense.")
-elif amount1 > 50:
-    print("  Moderate expense.")
-else:
-    print("  Small expense.")
-
-# Second Expense
-item2 = input("Second expense? ")
-amount2 = float(input("Amount? "))
-subtotal += amount2
-
-if amount2 > 200:
-    print("  Huge expense — are you sure?")
-elif amount2 > 100:
-    print("  Big expense.")
-elif amount2 > 50:
-    print("  Moderate expense.")
-else:
-    print("  Small expense.")
-
-# Two big expenses check
-if amount1 > 100 and amount2 > 100:
-    print("  Two big expenses in a row — slow down!")
-
-# Calculations
-average = subtotal / 2
-
 tax_percent = float(input("Tax rate %? "))
-tax = subtotal * (tax_percent / 100)
-total = subtotal + tax
-
 budget = float(input("Your budget? "))
-over_budget = total > budget
 
-# Summary Output
-print("-" * 40)
-print("SUMMARY")
-print(f"{item1}:\t\t${amount1}")
-print(f"{item2}:\t\t${amount2}")
-print(f"Subtotal:\t${subtotal}")
-print(f"Average:\t${average}")
-print(f"Tax ({tax_percent}%):\t${tax}")
-print(f"Grand total:\t${total}")
+print(f"Welcome, {name}!")
 
-# Budget Verdict
-if over_budget:
-    over_amount = total - budget
-    print(f"Over budget by ${over_amount}!")
-elif total > (0.90 * budget):
-    left_amount = budget - total
-    print(f"Careful: only ${left_amount} left.")
-else:
-    left_amount = budget - total
-    print(f"Within budget. ${left_amount} left.")
+# State trackers
+subtotal = 0.0
+count = 0
 
-print("-" * 40)
+# Interactive Menu Loop
+while True:
+    print("=" * 40)
+    print("MAIN MENU")
+    print("[1] Add an expense")
+    print("[2] View all expenses (coming soon)")
+    print("[3] Show total spent")
+    print("[4] Exit")
+    print("=" * 40)
 
-# Footer
-print(f"Made by: {name} | Installment 4")
+    choice = input("Choose 1-4: ")
+
+    if choice == "1":
+        amount = float(input("Amount? "))
+        subtotal += amount
+        count += 1
+
+        if amount > 200:
+            print("  Huge expense — are you sure?")
+        elif amount > 100:
+            print("  Big expense.")
+        elif amount > 50:
+            print("  Moderate expense.")
+        else:
+            print("  Small expense.")
+
+    elif choice == "2":
+        print("Coming soon: the tracker can't remember each item yet.")
+
+    elif choice == "3":
+        tax = subtotal * (tax_percent / 100)
+        total = subtotal + tax
+
+        print(f"Expenses:\t{count}")
+        print(f"Subtotal:\t${subtotal}")
+        print(f"Tax ({tax_percent}%):\t${tax}")
+        print(f"Grand total:\t${total}")
+
+        if total > budget:
+            over_amount = total - budget
+            print(f"Over budget by ${over_amount}!")
+        elif total > (0.90 * budget):
+            left_amount = budget - total
+            print(f"Careful: only ${left_amount} left.")
+        else:
+            left_amount = budget - total
+            print(f"Within budget. ${left_amount} left.")
+
+    elif choice == "4":
+        print(f"Goodbye, {name}!")
+        print("-" * 40)
+        print(f"Made by: {name} | Installment 5")
+        break
+
+    else:
+        print("Please choose 1, 2, 3 or 4.")
